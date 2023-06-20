@@ -37,6 +37,15 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Guardian configuration.
+config :team_todo_api, TeamTodoApiWeb.Auth.Guardian ,
+  issuer: "team_todo_api",
+  secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+
+config :team_todo_api, TeamTodoApiWeb.Auth.Pipeline,
+  module: TeamTodoApiWeb.Auth.Guardian,
+  error_handler: TeamTodoApiWeb.Auth.AuthErrorHandler
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
