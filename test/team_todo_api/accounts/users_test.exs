@@ -14,7 +14,7 @@ defmodule TeamTodoApi.UsersTest do
 
       count_before = Repo.aggregate(Schemas.User, :count)
 
-      response = Accounts.Users.create(params)
+      response = Accounts.Create.create_user(params)
 
       count_after = Repo.aggregate(Schemas.User, :count)
 
@@ -37,7 +37,7 @@ defmodule TeamTodoApi.UsersTest do
         password: "supersenha"
       }
 
-      {:error, changeset} = Accounts.Users.create(params)
+      {:error, changeset} = Accounts.Create.create_user(params)
 
       assert errors_on(changeset) == %{name: ["can't be blank"], email: ["has invalid format"]}
     end
