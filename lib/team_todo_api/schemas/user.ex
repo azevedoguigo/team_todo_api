@@ -1,4 +1,4 @@
-defmodule TeamTodoApi.Accounts.User do
+defmodule TeamTodoApi.Schemas.User do
   @moduledoc """
   This module provides the schema and user changeset.
   """
