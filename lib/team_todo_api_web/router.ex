@@ -9,6 +9,8 @@ defmodule TeamTodoApiWeb.Router do
     pipe_through :api
 
     post "/users", UsersController, :create
+
+    post "/login", AuthController, :login
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
