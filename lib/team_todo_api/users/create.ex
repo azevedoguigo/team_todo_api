@@ -1,4 +1,4 @@
-defmodule TeamTodoApi.Accounts.Create do
+defmodule TeamTodoApi.Users.Create do
   @moduledoc """
   Provides the function to register a user in the database.
   """

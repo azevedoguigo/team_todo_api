@@ -1,7 +1,7 @@
 defmodule TeamTodoApiWeb.UsersController do
   use TeamTodoApiWeb, :controller
 
-  alias TeamTodoApi.Accounts.Create
+  alias TeamTodoApi.Users.Create
 
   def create(conn, params) do
     case Create.create_user(params) do
