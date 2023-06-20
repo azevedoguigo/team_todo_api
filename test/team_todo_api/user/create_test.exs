@@ -1,7 +1,8 @@
 defmodule TeamTodoApi.UsersTest do
   use TeamTodoApi.DataCase
 
-  alias TeamTodoApi.{Schemas, Accounts}
+  alias TeamTodoApi.Schemas.User
+  alias TeamTodoApi.Users.Create
   alias TeamTodoApi.Repo
 
   describe "create/1" do
@@ -12,15 +13,15 @@ defmodule TeamTodoApi.UsersTest do
         password: "supersenha"
       }
 
-      count_before = Repo.aggregate(Schemas.User, :count)
+      count_before = Repo.aggregate(User, :count)
 
-      response = Accounts.Create.create_user(params)
+      response = Create.create_user(params)
 
-      count_after = Repo.aggregate(Schemas.User, :count)
+      count_after = Repo.aggregate(User, :count)
 
       assert {
         :ok,
-        %Schemas.User{
+        %User{
           name: "azevedoguigo",
           email: "azevedoguigo.test@example.com",
           password: "supersenha"
@@ -37,7 +38,7 @@ defmodule TeamTodoApi.UsersTest do
         password: "supersenha"
       }
 
-      {:error, changeset} = Accounts.Create.create_user(params)
+      {:error, changeset} = Create.create_user(params)
 
       assert errors_on(changeset) == %{name: ["can't be blank"], email: ["has invalid format"]}
     end
