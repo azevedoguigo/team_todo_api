@@ -33,4 +33,18 @@ defmodule TeamTodoApi.User.AuthTest do
       assert {:error, "Invalid password!"} == auth_error_response
     end
   end
+
+  describe "validate_password/2" do
+    test "Compares the password to the hash and returns a token if it's correct." do
+      {:ok, %User{password: password} = user} = Create.create_user(@user_default_params)
+
+      assert {:ok, _token} = Auth.validate_password(user, password)
+    end
+
+    test "When the password is incorrect, it returns an error message." do
+      {:ok, user} = Create.create_user(@user_default_params)
+
+      assert {:error, "Invalid password!"} == Auth.validate_password(user, "wrong_password")
+    end
+  end
 end
