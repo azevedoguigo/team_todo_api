@@ -8,7 +8,7 @@ defmodule TeamTodoApi.Users.Create do
 
   def create_user(params) do
     %User{}
-    |> User.chageset(params)
+    |> User.changeset(params)
     |> Repo.insert()
   end
 end

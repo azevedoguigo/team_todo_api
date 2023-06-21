@@ -19,7 +19,7 @@ defmodule TeamTodoApi.Schemas.User do
     timestamps()
   end
 
-  def chageset(user, params) do
+  def changeset(user, params) do
     user
     |> cast(params, @required_fields)
     |> validate_required(@required_fields)
