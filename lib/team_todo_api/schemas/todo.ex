@@ -28,6 +28,6 @@ defmodule TeamTodoApi.Schemas.Todo do
     |> validate_required(@required_fields)
     |> assoc_constraint(:user)
     |> validate_length(:title, min: 1, max: 20)
-    |> validate_required(:description, min: 1, max: 60)
+    |> validate_length(:description, min: 1, max: 60)
   end
 end
