@@ -5,12 +5,22 @@ defmodule TeamTodoApiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug TeamTodoApiWeb.Auth.Pipeline
+  end
+
   scope "/api", TeamTodoApiWeb do
     pipe_through :api
 
     post "/users", UsersController, :create
 
     post "/login", AuthController, :login
+  end
+
+  scope "/api", TeamTodoApiWeb do
+    pipe_through [:api, :auth]
+
+    post "/todos", TodosController, :create
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
