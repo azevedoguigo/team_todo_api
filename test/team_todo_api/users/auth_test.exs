@@ -1,4 +1,4 @@
-defmodule TeamTodoApi.User.AuthTest do
+defmodule TeamTodoApi.Users.AuthTest do
   use TeamTodoApi.DataCase
 
   alias TeamTodoApi.Users.{Auth, Create}
