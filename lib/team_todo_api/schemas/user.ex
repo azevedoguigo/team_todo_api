@@ -5,6 +5,7 @@ defmodule TeamTodoApi.Schemas.User do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias TeamTodoApi.Schemas.Todo
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @required_fields [:name, :email, :password]
@@ -15,6 +16,7 @@ defmodule TeamTodoApi.Schemas.User do
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash
+    has_many(:todo, Todo)
 
     timestamps()
   end
