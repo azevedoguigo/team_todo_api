@@ -27,7 +27,7 @@ defmodule TeamTodoApi.Schemas.Todo do
     |> cast(params, [:description | @required_fields])
     |> validate_required(@required_fields)
     |> assoc_constraint(:user)
-    |> validate_length(:title, min: 1, max: 20)
-    |> validate_length(:description, min: 1, max: 60)
+    |> validate_length(:title, min: 1, max: 40)
+    |> validate_length(:description, min: 1, max: 100)
   end
 end

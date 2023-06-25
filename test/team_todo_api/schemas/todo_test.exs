@@ -39,7 +39,7 @@ defmodule TeamTodoApi.Schemas.TodoTest do
       assert errors_on(invalid_changeset) == %{title: ["can't be blank"]}
     end
 
-    test "Returns an invalid changeset with an error description if the title length is greater than 20 characters." do
+    test "Returns an invalid changeset with an error description if the title length is greater than 40 characters." do
       {:ok, %User{id: user_id}} = Create.create_user(@user_default_params)
 
       params = %{
@@ -50,21 +50,21 @@ defmodule TeamTodoApi.Schemas.TodoTest do
 
       invalid_changeset = Todo.changeset(%Todo{}, params)
 
-      assert errors_on(invalid_changeset) == %{title: ["should be at most 20 character(s)"]}
+      assert errors_on(invalid_changeset) == %{title: ["should be at most 40 character(s)"]}
     end
 
-    test "Returns an invalid changeset and an error description when the description is longer than 60 characters." do
+    test "Returns an invalid changeset and an error description when the description is longer than 100 characters." do
       {:ok, %User{id: user_id}} = Create.create_user(@user_default_params)
 
       params = %{
         title: "My ToDo tile",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget tellus blandit...",
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
         user_id: user_id
       }
 
       invalid_changeset = Todo.changeset(%Todo{}, params)
 
-      assert errors_on(invalid_changeset) == %{description: ["should be at most 60 character(s)"]}
+      assert errors_on(invalid_changeset) == %{description: ["should be at most 100 character(s)"]}
     end
   end
 end
