@@ -20,6 +20,7 @@ defmodule TeamTodoApiWeb.Router do
   scope "/api", TeamTodoApiWeb do
     pipe_through [:api, :auth]
 
+    get "/todos", TodosController, :get_all
     post "/todos", TodosController, :create
   end
 
