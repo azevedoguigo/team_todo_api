@@ -17,7 +17,7 @@ defmodule TeamTodoApi.Schemas.Todo do
     field :title, :string
     field :description, :string
     field :completed, :boolean, default: false
-    belongs_to(:user, User)
+    belongs_to :user, User
 
     timestamps()
   end
