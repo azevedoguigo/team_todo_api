@@ -16,7 +16,8 @@ defmodule TeamTodoApi.Schemas.Team do
   schema "teams" do
     field :name, :string
     field :description, :string
-    belongs_to(:user, User)
+    belongs_to :user, User
+    many_to_many :users, User, join_through: "team_users"
 
     timestamps()
   end
