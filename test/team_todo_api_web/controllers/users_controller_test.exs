@@ -29,7 +29,7 @@ defmodule TeamTodoApiWeb.UsersControllerTest do
         |> post(~p"/api/users", params)
         |> json_response(:bad_request)
 
-      assert %{"error" => %{"email" => ["has invalid format"]}} == response
+      assert %{"errors" => %{"email" => ["has invalid format"]}} == response
     end
   end
 end

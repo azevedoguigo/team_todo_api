@@ -1,20 +1,15 @@
 defmodule TeamTodoApiWeb.UsersController do
   use TeamTodoApiWeb, :controller
 
-  alias TeamTodoApiWeb.ErrorHandler
   alias TeamTodoApi.Users.Create
 
-  def create(conn, params) do
-    case Create.create_user(params) do
-      {:ok, user} ->
-        conn
-        |> put_status(:created)
-        |> json(%{message: "User created!", user: user})
+  action_fallback TeamTodoApiWeb.FallbackController
 
-      {:error, changeset} ->
-        conn
-        |> put_status(:bad_request)
-        |> json(%{error: ErrorHandler.humanize_errors(changeset)})
+  def create(conn, params) do
+    with {:ok, user} <- Create.create_user(params) do
+      conn
+      |> put_status(:created)
+      |> render(:create, user: user)
     end
   end
 end
