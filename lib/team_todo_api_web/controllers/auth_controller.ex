@@ -3,17 +3,13 @@ defmodule TeamTodoApiWeb.AuthController do
 
   alias TeamTodoApi.Users.Auth
 
-  def login(conn, credentials) do
-    case Auth.authenticate(credentials) do
-      {:ok, token} ->
-        conn
-        |> put_status(:ok)
-        |> json(%{token: token})
+  action_fallback TeamTodoApiWeb.FallbackController
 
-      {:error, error_message} ->
-        conn
-        |> put_status(:unauthorized)
-        |> json(%{error: error_message})
+  def login(conn, credentials) do
+    with {:ok, token} <- Auth.authenticate(credentials) do
+      conn
+      |> put_status(:ok)
+      |> render(:auth, token: token)
     end
   end
 end
