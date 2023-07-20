@@ -70,7 +70,7 @@ defmodule TeamTodoApiWeb.TodosControllerTest do
         |> post(~p"/api/todos", %{title: "", description: "MyTodo description"})
         |> json_response(:bad_request)
 
-      assert %{"error" => %{"title" => ["can't be blank"]}} == response
+      assert %{"errors" => %{"title" => ["can't be blank"]}} == response
     end
   end
 end
