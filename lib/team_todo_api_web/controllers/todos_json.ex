@@ -10,6 +10,7 @@ defmodule TeamTodoApiWeb.TodosJSON do
 
   defp data(%Todo{} = todo) do
     %{
+      id: todo.id,
       title: todo.title,
       description: todo.description,
       user_id: todo.user_id,
