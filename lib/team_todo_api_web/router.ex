@@ -23,7 +23,7 @@ defmodule TeamTodoApiWeb.Router do
     get "/todos", TodosController, :get_all
     post "/todos", TodosController, :create
 
-    post "/teams", TeamsController, :create
+    resources "/teams", TeamsController, only: [:create, :index]
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

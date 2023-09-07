@@ -8,6 +8,8 @@ defmodule TeamTodoApiWeb.TeamsJSON do
     }
   end
 
+  def index(%{team: team}), do: data(team)
+
   defp data(%Team{} = team) do
     %{
       id: team.id,
