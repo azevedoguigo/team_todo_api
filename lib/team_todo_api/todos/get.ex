@@ -17,5 +17,14 @@ defmodule TeamTodoApi.Todos.Get do
   end
 
   defp check_todos_count(todos, todos_count) when todos_count > 0, do: {:ok, todos}
-  defp check_todos_count(_todos, todos_count) when todos_count == 0, do: {:error, "You don't have todos!"}
+
+  defp check_todos_count(_todos, todos_count) when todos_count == 0 do
+    {
+      :error,
+      %{
+        message: "You don't have todos!",
+        status: :not_found
+      }
+    }
+  end
 end
