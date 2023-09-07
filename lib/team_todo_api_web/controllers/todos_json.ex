@@ -8,6 +8,12 @@ defmodule TeamTodoApiWeb.TodosJSON do
     }
   end
 
+  def get_all(%{todos: todos}) do
+    %{
+      todos: Enum.map(todos, fn todo -> data(todo) end)
+    }
+  end
+
   defp data(%Todo{} = todo) do
     %{
       id: todo.id,

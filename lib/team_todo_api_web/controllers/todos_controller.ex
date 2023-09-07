@@ -9,16 +9,10 @@ defmodule TeamTodoApiWeb.TodosController do
   def get_all(conn, _) do
     %User{id: user_id} = Guardian.Plug.current_resource(conn)
 
-    case Get.get_all(user_id) do
-      {:ok, todos} ->
-        conn
-        |> put_status(:ok)
-        |> json(%{todos: todos})
-
-      {:error, message} ->
-        conn
-        |> put_status(:not_found)
-        |> json(%{error: message})
+    with {:ok, todos} <- Get.get_all(user_id) do
+      conn
+      |> put_status(:ok)
+      |> render(:get_all, todos: todos)
     end
   end
 
