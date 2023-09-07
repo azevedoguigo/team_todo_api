@@ -8,10 +8,10 @@ defmodule TeamTodoApiWeb.FallbackController do
     |> render(:error, changeset: changeset)
   end
 
-  def call(conn, {:error, message}) do
+  def call(conn, {:error, error_data}) do
     conn
-    |> put_status(:unauthorized)
+    |> put_status(error_data.status)
     |> put_view(TeamTodoApiWeb.ErrorJSON)
-    |> render(:error, message: message)
+    |> render(:error, message: error_data.message)
   end
 end
