@@ -12,7 +12,7 @@ defmodule TeamTodoApiWeb.TeamsController do
     with {:ok, team} <- Create.create_team(params, user_id) do
       conn
       |> put_status(:created)
-      |> json(%{message: "Team created!", team: team})
+      |> render(:create, team: team)
     end
   end
 end
