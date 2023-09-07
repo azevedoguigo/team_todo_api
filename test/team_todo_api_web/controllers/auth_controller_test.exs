@@ -29,7 +29,7 @@ defmodule TeamTodoApiWeb.AuthControllerTest do
       response =
         conn
         |> post(~p"/api/login", %{"email" => "wrong@example.com", "password" => password})
-        |> json_response(:unauthorized)
+        |> json_response(:not_found)
 
       assert %{"error" => "Email not registred!"} == response
     end

@@ -37,7 +37,15 @@ defmodule TeamTodoApi.Todos.GetTest do
     test "Returns a tuple with :error and a message if the user doesn't have todos." do
       {:ok, %User{id: user_id}} = Users.Create.create_user(@user_default_params)
 
-      assert {:error, "You don't have todos!"} == Todos.Get.get_all(user_id)
+      expected_response = {
+        :error,
+        %{
+          message: "You don't have todos!",
+          status: :not_found
+        }
+      }
+
+      assert expected_response == Todos.Get.get_all(user_id)
     end
   end
 end

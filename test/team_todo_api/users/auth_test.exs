@@ -22,7 +22,15 @@ defmodule TeamTodoApi.Users.AuthTest do
 
       auth_error_response = Auth.authenticate(%{"email" => "wrong_email@example.com", "password" => password})
 
-      assert {:error, "Email not registred!"} == auth_error_response
+      expected_response = {
+        :error,
+        %{
+          message: "Email not registred!",
+          status: :not_found
+        }
+      }
+
+      assert expected_response == auth_error_response
     end
 
     test "When the password is incorrect, it returns an error message." do
@@ -30,7 +38,15 @@ defmodule TeamTodoApi.Users.AuthTest do
 
       auth_error_response = Auth.authenticate(%{"email" => email, "password" => "wrong_password"})
 
-      assert {:error, "Invalid password!"} == auth_error_response
+      expected_response = {
+        :error,
+        %{
+          message: "Invalid password!",
+          status: :unauthorized
+        }
+      }
+
+      assert expected_response == auth_error_response
     end
   end
 
@@ -44,7 +60,15 @@ defmodule TeamTodoApi.Users.AuthTest do
     test "When the password is incorrect, it returns an error message." do
       {:ok, user} = Create.create_user(@user_default_params)
 
-      assert {:error, "Invalid password!"} == Auth.validate_password(user, "wrong_password")
+      expected_response = {
+        :error,
+        %{
+          message: "Invalid password!",
+          status: :unauthorized
+        }
+      }
+
+      assert expected_response == Auth.validate_password(user, "wrong_password")
     end
   end
 end
