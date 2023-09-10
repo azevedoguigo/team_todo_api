@@ -16,13 +16,11 @@ defmodule TeamTodoApiWeb.TeamsController do
     end
   end
 
-  def index(conn, _) do
-    %User{id: user_id} = Guardian.Plug.current_resource(conn)
-
-    with {:ok, team} <- Get.get_team(user_id) do
+  def index(conn, %{"team_id" => team_id}) do
+    with {:ok, team} <- Get.get_team(team_id) do
       conn
       |> put_status(:ok)
-      |> render(:index, team)
+      |> render(:index, team: team)
     end
   end
 end
