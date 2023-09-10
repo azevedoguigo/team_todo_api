@@ -5,12 +5,18 @@ defmodule TeamTodoApi.Teams.Create do
 
   alias TeamTodoApi.Repo
   alias TeamTodoApi.Schemas.Team
+  alias TeamTodoApi.Users.Get
 
   def create_team(params, user_id) do
-    params = Map.put(params, "user_id", user_id)
+    case Get.get_user(user_id) do
+      {:ok, _user} ->
+        params = Map.put(params, "user_id", user_id)
 
-    %Team{}
-    |> Team.changeset(params)
-    |> Repo.insert()
+        %Team{}
+        |> Team.changeset(params)
+        |> Repo.insert()
+
+      {:error, message} -> {:error, message}
+    end
   end
 end
