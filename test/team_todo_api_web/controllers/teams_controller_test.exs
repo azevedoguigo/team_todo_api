@@ -26,7 +26,7 @@ defmodule TeamTodoApiWeb.TeamsControllerTest do
   end
 
   describe "create/2" do
-    test "Creates and returns a team when settings are valid.", %{conn: conn, user_id: user_id} do
+    test "Creates and returns a team when params are valid.", %{conn: conn, user_id: user_id} do
       response =
         conn
         |> post(~p"/api/teams", Map.put(@team_default_params, :user_id, user_id))
