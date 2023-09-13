@@ -32,16 +32,15 @@ defmodule TeamTodoApiWeb.TeamsControllerTest do
         |> post(~p"/api/teams", Map.put(@team_default_params, :user_id, user_id))
         |> json_response(:created)
 
-      expected_response = %{
+
+      assert %{
         "message" => "Team created!",
         "team" => %{
           "name" => "My team",
           "description" => "My test team",
-          "user_id" => user_id
+          "user_id" => ^user_id
         }
-      }
-
-      assert expected_response = response
+      } = response
     end
 
     test "When any mandatory parameter is invalid, an error is returned.", %{conn: conn, user_id: user_id} do
