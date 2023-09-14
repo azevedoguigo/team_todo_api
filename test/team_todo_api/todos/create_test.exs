@@ -4,16 +4,20 @@ defmodule TeamTodoApi.Todos.CreateTest do
   alias TeamTodoApi.Schemas.{User, Todo}
   alias TeamTodoApi.{Users, Todos}
 
-  @user_default_params %{
-    name: "azevedoguigo",
-    email: "test@gmail.com",
-    password: "supersenha"
-  }
+  setup do
+    user_params = %{
+      name: "azevedoguigo",
+      email: "test@gmail.com",
+      password: "supersenha"
+    }
+
+    {:ok, %User{id: user_id}} = Users.Create.create_user(user_params)
+
+    {:ok, user_id: user_id}
+  end
 
   describe "create_todo/2" do
-    test "When the parameters are valid, returns the new todo." do
-      {:ok, %User{id: user_id}} = Users.Create.create_user(@user_default_params)
-
+    test "When the parameters are valid, returns the new todo.", %{user_id: user_id} do
       params = %{
         "title" => "My ToDo title",
         "description" => "My ToDo description."
@@ -24,9 +28,7 @@ defmodule TeamTodoApi.Todos.CreateTest do
       assert{:ok, %Todo{title: "My ToDo title", description: "My ToDo description."}} = result
     end
 
-    test "When one or more parameters are invalid, returns an invalid changeset." do
-      {:ok, %User{id: user_id}} = Users.Create.create_user(@user_default_params)
-
+    test "When one or more parameters are invalid, returns an invalid changeset.", %{user_id: user_id} do
       params = %{
         "title" => "", # The title cannot be blank.
         "description" => "My ToDo description."

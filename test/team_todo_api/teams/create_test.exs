@@ -7,16 +7,20 @@ defmodule TeamTodoApi.Teams.CreateTest do
   alias TeamTodoApi.Schemas.Team
   alias TeamTodoApi.Teams
 
-  @user_default_params %{
-    name: "azevedoguigo",
-    email: "test@gmail.com",
-    password: "supersenha"
-  }
+  setup do
+    user_params = %{
+      name: "azevedoguigo",
+      email: "test@gmail.com",
+      password: "supersenha"
+    }
+
+    {:ok, %User{id: user_id}} = Users.Create.create_user(user_params)
+
+    {:ok, user_id: user_id}
+  end
 
   describe "create/2" do
-    test "Create and return the team when all params are valid." do
-      {:ok, %User{id: user_id}} = Users.Create.create_user(@user_default_params)
-
+    test "Create and return the team when all params are valid.", %{user_id: user_id} do
       create_team_params = %{
         "name" => "My Team",
         "description" => "Testing team creation."
@@ -34,9 +38,7 @@ defmodule TeamTodoApi.Teams.CreateTest do
       } = response
     end
 
-    test "Returns a tuple with an :error and an invalid changeset when the name is not provided." do
-      {:ok, %User{id: user_id}} = Users.Create.create_user(@user_default_params)
-
+    test "Returns a tuple with an :error and an invalid changeset when the name is not provided.", %{user_id: user_id} do
       create_team_params = %{
         "name" => "",
         "description" => "Testing team creation."

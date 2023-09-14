@@ -4,16 +4,20 @@ defmodule TeamTodoApi.Todos.GetTest do
   alias TeamTodoApi.Schemas.{User, Todo}
   alias TeamTodoApi.{Users, Todos}
 
-  @user_default_params %{
-    name: "azevedoguigo",
-    email: "test@example.com",
-    password: "supersenha"
-  }
+  setup do
+    user_params = %{
+      name: "azevedoguigo",
+      email: "test@gmail.com",
+      password: "supersenha"
+    }
+
+    {:ok, %User{id: user_id}} = Users.Create.create_user(user_params)
+
+    {:ok, user_id: user_id}
+  end
 
   describe "get_all/1" do
-    test "Returns a tuple with :ok and a list of all if the user has todos." do
-      {:ok, %User{id: user_id}} = Users.Create.create_user(@user_default_params)
-
+    test "Returns a tuple with :ok and a list of all if the user has todos.", %{user_id: user_id} do
       todo_params = %{
         "title" => "Todo title",
         "description" => "Todo description."
@@ -34,9 +38,7 @@ defmodule TeamTodoApi.Todos.GetTest do
       } = result
     end
 
-    test "Returns a tuple with :error and a message if the user doesn't have todos." do
-      {:ok, %User{id: user_id}} = Users.Create.create_user(@user_default_params)
-
+    test "Returns a tuple with :error and a message if the user doesn't have todos.", %{user_id: user_id} do
       expected_response = {
         :error,
         %{
