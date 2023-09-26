@@ -24,6 +24,7 @@ defmodule TeamTodoApiWeb.Router do
     post "/todos", TodosController, :create
 
     resources "/teams", TeamsController, only: [:create, :index]
+    post "/teams/todos", TeamTodosController, :create
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

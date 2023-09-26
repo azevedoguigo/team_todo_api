@@ -1,26 +1,21 @@
 defmodule TeamTodoApi.Teams.Todos.Create do
   @moduledoc """
-  This module provides the function for creating team todo.
+  Module with the necessary function to perform team todos.
   """
 
   alias TeamTodoApi.Repo
-  alias Ecto.Changeset
   alias TeamTodoApi.Teams
-  alias TeamTodoApi.Todos
+  alias TeamTodoApi.Schemas.TeamTodo
 
-  def create_team_todo(team_id, user_id, todo_params) do
-    with {:ok, team} <- Teams.Get.get_team(team_id),
-         {:ok, todo} <- Todos.Create.create_todo(todo_params, user_id) do
-
-      team_preload = Repo.preload(team, [:user, :users, :todos])
-      todo_preload = Repo.preload(todo, [:user])
-
-      team_changeset = Changeset.change(team_preload)
-      team_with_todo = Changeset.put_assoc(team_changeset, :todos, [todo_preload])
-
-      team = Repo.update!(team_with_todo)
-
-      {:ok, team}
+  def create_team_todo(%{"team_id" => team_id} = params) do
+    with {:ok, _team} <- Teams.Get.get_team(team_id) do
+      handle_create_team_todo(params)
     end
+  end
+
+  defp handle_create_team_todo(params) do
+    %TeamTodo{}
+    |> TeamTodo.changeset(params)
+    |> Repo.insert()
   end
 end
