@@ -5,7 +5,7 @@ defmodule TeamTodoApi.Schemas.Team do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias TeamTodoApi.Schemas.{User, Todo}
+  alias TeamTodoApi.Schemas.{User, TeamTodo}
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @foreign_key_type Ecto.UUID
@@ -18,7 +18,7 @@ defmodule TeamTodoApi.Schemas.Team do
     field :description, :string
     belongs_to :user, User
     many_to_many :users, User, join_through: "team_users"
-    many_to_many :todos, Todo, join_through: "team_todos"
+    has_many :team_todos, TeamTodo
 
     timestamps()
   end
