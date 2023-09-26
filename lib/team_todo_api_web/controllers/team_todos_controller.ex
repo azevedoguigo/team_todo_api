@@ -12,4 +12,12 @@ defmodule TeamTodoApiWeb.TeamTodosController do
       |> render(:create, todo: todo)
     end
   end
+
+  def get_all(conn, %{"team_id" => team_id}) do
+    with {:ok, todos} <- Todos.Get.get_all(team_id) do
+      conn
+      |> put_status(:ok)
+      |> render(:get_all, todos: todos)
+    end
+  end
 end
