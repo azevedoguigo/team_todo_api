@@ -5,7 +5,6 @@ defmodule TeamTodoApiWeb.TeamsController do
   alias TeamTodoApi.Schemas.User
 
   action_fallback TeamTodoApiWeb.FallbackController
-
   def create(conn, params) do
     %User{id: user_id} = Guardian.Plug.current_resource(conn)
 
